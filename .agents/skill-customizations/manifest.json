@@ -1,0 +1,624 @@
+{
+  "version": 1,
+  "description": "Personalizzazioni di progetto per le skill upstream elencate in skills-lock.json. Guida: docs/agents/skill-customizations.md",
+  "upstream": {
+    "source": "mattpocock/skills",
+    "sourceType": "github",
+    "url": "https://github.com/mattpocock/skills.git",
+    "validatedRef": "49dd158d1076134a641b33efb035946536778336",
+    "validatedNote": "Personalizzazioni verificate su questo commit upstream; il contenuto delle 20 skill e' identico da f3fc5632f401156837ee3872f14fe33ccf1024ea."
+  },
+  "paths": {
+    "skills": ".agents/skills",
+    "lock": "skills-lock.json",
+    "links": [
+      {
+        "path": ".claude/skills",
+        "target": ".agents/skills",
+        "purpose": "Claude Code legge le skill di progetto da .claude/skills"
+      }
+    ]
+  },
+  "policies": {
+    "intestazione": {
+      "file": "policies/intestazione.md",
+      "requiredText": [
+        "**Regole locali del progetto**"
+      ]
+    },
+    "semplificazione-leggera": {
+      "file": "policies/semplificazione-leggera.md",
+      "requiredText": [
+        "SEMPLIFICAZIONE LEGGERA",
+        "non riduce la profondità del ragionamento"
+      ]
+    },
+    "gate-umani": {
+      "file": "policies/gate-umani.md",
+      "requiredText": [
+        "Nessun `git commit`, `git push`, pull request, merge, tag o release senza autorizzazione esplicita",
+        "dippanz/pi-extension-compact",
+        "Se lavori come subagent valgono gli stessi gate",
+        "metti all'inizio del brief queste regole locali"
+      ]
+    },
+    "ticket": {
+      "file": "policies/ticket.md",
+      "requiredText": [
+        "Non sostituire i template di questa skill",
+        "**In pratica:**",
+        "**Come funzionerà:**",
+        "Question ↔ Obiettivo"
+      ]
+    }
+  },
+  "sentinels": [
+    "\\bcommit(s|ted|ting)?\\b",
+    "\\bpush(es|ed|ing)?\\b",
+    "\\bpull request",
+    "\\bPRs?\\b",
+    "\\bmerg(e|es|ed|ing|er)\\b",
+    "\\bbranch(es)?\\b",
+    "\\bworktrees?\\b",
+    "\\bdeploy",
+    "\\bmigrat",
+    "\\bclos(e|es|ed|ing)\\b",
+    "\\bsub-?agents?\\b",
+    "\\bbackground agent",
+    "\\bready-for-(agent|human)\\b",
+    "\\boverrid",
+    "\\bNotes\\b",
+    "\\b(GLOSSARY|CONTEXT)(-MAP)?\\.md\\b",
+    "docs/adr",
+    "\\bgh (api|issue|pr)\\b",
+    "github\\.com",
+    "--force|force-push",
+    "disable-model-invocation|allow_implicit_invocation",
+    "wayfinder:"
+  ],
+  "commonParts": [
+    "policy:intestazione",
+    "policy:semplificazione-leggera",
+    "policy:gate-umani"
+  ],
+  "skills": {
+    "code-review": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common",
+            "file:overrides/code-review.md"
+          ]
+        },
+        {
+          "id": "perimetro",
+          "op": "insert",
+          "afterLine": "### 1. Pin the fixed point",
+          "parts": [
+            "file:overrides/code-review.perimetro.md"
+          ]
+        },
+        {
+          "id": "sequenziale",
+          "op": "insert",
+          "afterLine": "### 4. Spawn both sub-agents in parallel",
+          "parts": [
+            "file:overrides/code-review.sequenziale.md"
+          ]
+        }
+      ],
+      "protect": [
+        {
+          "policy": "review-uncommitted",
+          "description": "La review copre commit, staged, unstaged e untracked pertinenti senza commit preliminari.",
+          "requiredText": [
+            "modifiche staged, unstaged e i file untracked pertinenti",
+            "Non creare commit, stash o branch per ottenere un diff",
+            "git ls-files --others --exclude-standard"
+          ]
+        },
+        {
+          "policy": "review-sequential",
+          "description": "Senza subagent la review gira in sequenza; Standards e Spec restano separati.",
+          "requiredText": [
+            "esegui le due analisi in sequenza",
+            "tieni separati i report `## Standards` e `## Spec`",
+            "## Standards",
+            "## Spec"
+          ]
+        }
+      ]
+    },
+    "codebase-design": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "diagnosing-bugs": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "domain-modeling": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common",
+            "file:overrides/domain-modeling.md"
+          ]
+        },
+        {
+          "id": "file-di-dominio",
+          "op": "replace",
+          "line": "Create files lazily: only when you have something to write. If no `GLOSSARY.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.",
+          "parts": [
+            "file:overrides/domain-modeling.file.md"
+          ]
+        },
+        {
+          "id": "glossario",
+          "op": "insert",
+          "afterLine": "### Update GLOSSARY.md inline",
+          "parts": [
+            "file:overrides/domain-modeling.glossario.md"
+          ]
+        },
+        {
+          "id": "adr",
+          "op": "insert",
+          "afterLine": "### Offer ADRs sparingly",
+          "parts": [
+            "file:overrides/domain-modeling.adr.md"
+          ]
+        },
+        {
+          "id": "adr-format",
+          "file": "ADR-FORMAT.md",
+          "op": "replace",
+          "line": "Create the `docs/adr/` directory lazily: only when the first ADR is needed.",
+          "parts": [
+            "file:overrides/domain-modeling.adr-format.md"
+          ]
+        },
+        {
+          "id": "glossary-format",
+          "file": "GLOSSARY-FORMAT.md",
+          "op": "replace",
+          "line": "- If neither exists, create a root `GLOSSARY.md` lazily when the first term is resolved",
+          "parts": [
+            "file:overrides/domain-modeling.glossary-format.md"
+          ]
+        }
+      ],
+      "protect": [
+        {
+          "policy": "canonical-domain-sources",
+          "description": "Fonti canoniche di docs/agents/domain.md; niente documenti di dominio paralleli (anche nei file di formato); durante Wayfinder decisioni nel tracker.",
+          "requiredText": [
+            "non creare documenti di dominio paralleli senza una decisione esplicita",
+            "Durante Wayfinder registra termini e decisioni nel tracker",
+            "non creare automaticamente un file in `docs/adr/`"
+          ],
+          "forbiddenText": [
+            "Create files lazily",
+            "Create the `docs/adr/` directory lazily",
+            "create a root `GLOSSARY.md` lazily"
+          ]
+        }
+      ]
+    },
+    "grill-me": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "grill-with-docs": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "grilling": {
+      "customizations": [],
+      "note": "Nessuna personalizzazione per scelta: grilling non si modifica senza una necessita' concreta. Riceve le regole dalla skill chiamante (wayfinder, grill-me, grill-with-docs) o dalla sessione."
+    },
+    "handoff": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "implement": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common",
+            "file:overrides/implement.md"
+          ]
+        },
+        {
+          "id": "no-commit",
+          "op": "replace",
+          "line": "Commit your work to the current branch.",
+          "parts": [
+            "file:overrides/implement.no-commit.md"
+          ]
+        }
+      ],
+      "protect": [
+        {
+          "policy": "no-auto-commit",
+          "description": "Nessun commit, push, PR o merge senza autorizzazione umana (sostituisce l'auto-commit upstream).",
+          "requiredText": [
+            "Non eseguire commit, push, PR o merge",
+            "Do not commit (regola locale)"
+          ],
+          "forbiddenText": [
+            "Commit your work to the current branch."
+          ]
+        }
+      ]
+    },
+    "implement-spec": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common",
+            "file:overrides/implement-spec.md"
+          ]
+        }
+      ],
+      "protect": [
+        {
+          "policy": "no-auto-merge",
+          "description": "Branch, commit, merge, PR e chiusure richiedono autorizzazione esplicita.",
+          "requiredText": [
+            "richiede un'autorizzazione esplicita dell'utente nella sessione corrente"
+          ]
+        }
+      ]
+    },
+    "prototype": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common",
+            "file:overrides/prototype.md"
+          ]
+        },
+        {
+          "id": "cattura",
+          "op": "replace",
+          "line": "6. **Capture it when done.** Fold any validated decision into the real code, then capture the prototype itself as a **primary source**: commit it to a throwaway branch, out of main, and leave a context pointer to that branch on the implementation issue. Capture the answer too (the verdict and the question it settled) in the issue or a commit. The main branch keeps only the validated decision.",
+          "parts": [
+            "file:overrides/prototype.cattura.md"
+          ]
+        },
+        {
+          "id": "regola-1",
+          "op": "replace",
+          "line": "1. **Throwaway from day one, and clearly marked as such.** Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious, but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.",
+          "parts": [
+            "file:overrides/prototype.regola-1.md"
+          ]
+        },
+        {
+          "id": "regola-2",
+          "op": "replace",
+          "line": "2. **Trivial to run.** A UI prototype starts from one command in the project's task runner: `pnpm <name>`, `python <path>`, `bun <path>`, etc. A logic demo is a single HTML file the user double-clicks. Either way, no thinking required to start it.",
+          "parts": [
+            "file:overrides/prototype.regola-2.md"
+          ]
+        },
+        {
+          "id": "logic-cattura",
+          "file": "LOGIC.md",
+          "op": "replace",
+          "line": "Once the prototype has answered its question, capture the answer, then capture the prototype the way the [SKILL](SKILL.md) describes. The logic-specific mapping: the validated reducer / machine / function set lifts into the real module (the decision, absorbed); the HTML shell rides along to the throwaway branch that keeps the prototype as a primary source, and being one self-contained file, it stays trivially re-runnable there.",
+          "parts": [
+            "file:overrides/prototype.logic-cattura.md"
+          ]
+        },
+        {
+          "id": "ui-locale",
+          "file": "UI.md",
+          "op": "insert",
+          "afterLine": "# UI Prototype",
+          "parts": [
+            "file:overrides/prototype.ui-locale.md"
+          ]
+        },
+        {
+          "id": "ui-cattura",
+          "file": "UI.md",
+          "op": "replace",
+          "line": "Once a variant has won, capture the answer (which variant and why), then capture the prototype the way the [SKILL](SKILL.md) describes. Fold the winner into the real code and move the rest onto the throwaway branch, not into main:",
+          "parts": [
+            "file:overrides/prototype.ui-cattura.md"
+          ]
+        },
+        {
+          "id": "ui-sub-a",
+          "file": "UI.md",
+          "op": "replace",
+          "line": "- **Sub-shape A**: fold the winner into the existing page; drop the losing variants and the switcher from main.",
+          "parts": [
+            "file:overrides/prototype.ui-sub-a.md"
+          ]
+        },
+        {
+          "id": "ui-sub-b",
+          "file": "UI.md",
+          "op": "replace",
+          "line": "- **Sub-shape B**: promote the winning variant to a real route; drop the throwaway route and the switcher from main.",
+          "parts": [
+            "file:overrides/prototype.ui-sub-b.md"
+          ]
+        },
+        {
+          "id": "ui-fonte",
+          "file": "UI.md",
+          "op": "replace",
+          "line": "The full set of variants is the primary source, so it lands on the throwaway branch, not the bin, since variant components and the switcher left in the main branch rot fast and confuse the next reader.",
+          "parts": [
+            "file:overrides/prototype.ui-fonte.md"
+          ]
+        }
+      ],
+      "protect": [
+        {
+          "policy": "disposable-prototype",
+          "description": "Prototipi temporanei in .tmp/, mai integrati automaticamente; vale anche per LOGIC.md e UI.md.",
+          "requiredText": [
+            "non integrarlo mai automaticamente nel codice di produzione",
+            "`.tmp/prototypes/<slug>/`",
+            "le sub-shape A (varianti sulla route esistente)"
+          ],
+          "forbiddenText": [
+            "commit it to a throwaway branch",
+            "rides along to the throwaway branch",
+            "Fold the winner into the real code",
+            "it lands on the throwaway branch",
+            "Locate the prototype code close to where it will actually be used",
+            "fold the winner into the existing page",
+            "promote the winning variant to a real route"
+          ]
+        }
+      ]
+    },
+    "research": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common",
+            "file:overrides/research.md"
+          ]
+        }
+      ],
+      "protect": [
+        {
+          "policy": "research-read-only",
+          "description": "La ricerca non scrive su tracker, Git o sistemi remoti; note in .tmp/.",
+          "requiredText": [
+            "Sola lettura: nessuna scrittura su tracker, Git o sistemi remoti"
+          ]
+        }
+      ]
+    },
+    "setup-matt-pocock-skills": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "tdd": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "to-questionnaire": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "to-spec": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "to-tickets": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common",
+            "policy:ticket",
+            "file:overrides/to-tickets.md"
+          ]
+        }
+      ],
+      "protect": [
+        {
+          "policy": "ticket-template-kept",
+          "description": "Template upstream conservato; sezioni locali e dipendenze mantenute.",
+          "requiredText": [
+            "<issue-template>",
+            "## What to build",
+            "## Acceptance criteria",
+            "conserva nel corpo del ticket la sezione Dipendenze e riferimenti"
+          ]
+        }
+      ]
+    },
+    "triage": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "wait-what": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common"
+          ]
+        }
+      ]
+    },
+    "wayfinder": {
+      "customizations": [
+        {
+          "id": "regole-locali",
+          "op": "insert",
+          "after": "frontmatter",
+          "parts": [
+            "common",
+            "policy:ticket",
+            "file:overrides/wayfinder.md"
+          ]
+        },
+        {
+          "id": "notes",
+          "op": "replace",
+          "line": "Wayfinder is **planning** by default: each ticket resolves a decision, and the map is done when the way is clear, with nothing left to decide before someone goes and does the thing. The pull to just do the work is usually the signal you've reached the edge of the map and it's time to hand off. An effort can override this in its **Notes**, carrying execution into the map itself, but absent that, produce decisions, not deliverables.",
+          "parts": [
+            "file:overrides/wayfinder.notes.md"
+          ]
+        },
+        {
+          "id": "ricerca",
+          "op": "replace",
+          "line": "5. **Fire the research subagents.** For each `research` ticket you just created, spin up a subagent that calls the Skill tool with \"research\" to resolve it in parallel, capturing its findings on a throwaway `research/<name>` branch with a context pointer from the ticket. Push the branch but open no PR: it is never merged.",
+          "parts": [
+            "file:overrides/wayfinder.research.md"
+          ]
+        }
+      ],
+      "protect": [
+        {
+          "policy": "plan-dont-do",
+          "description": "Wayfinder decide e pianifica; le Notes non derogano.",
+          "requiredText": [
+            "Wayfinder resta una skill di decisione e pianificazione",
+            "Le **Notes** della mappa non possono derogare a queste regole"
+          ],
+          "forbiddenText": [
+            "An effort can override this in its **Notes**"
+          ]
+        },
+        {
+          "policy": "auto-research",
+          "description": "Ricerca automatica consentita, anche in parallelo; i subagent non scrivono su Git, tracker o sistemi remoti; research/* sotto gate.",
+          "requiredText": [
+            "Ricerca automatica consentita",
+            "non scrivono su Git, sul tracker o su sistemi remoti",
+            "I branch `research/*` dell'upstream si creano, committano o pushano solo con autorizzazione esplicita",
+            "I ticket `research` sono l'eccezione prevista dall'upstream",
+            "Non cancellare issue"
+          ],
+          "forbiddenText": [
+            "Push the branch but open no PR"
+          ]
+        },
+        {
+          "policy": "wayfinder-tracker",
+          "description": "Label wayfinder:*, dipendenze native, sub-issue, frontier e assegnazioni restano quelle upstream.",
+          "requiredText": [
+            "`wayfinder:` labels are the only labels a map and its tickets carry",
+            "## Question",
+            "**Claim it**"
+          ]
+        }
+      ]
+    }
+  }
+}

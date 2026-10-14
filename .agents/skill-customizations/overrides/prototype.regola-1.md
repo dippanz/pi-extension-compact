@@ -1,0 +1,1 @@
+1. **Throwaway from day one, and clearly marked as such.** (regola locale) Metti il prototipo in `.tmp/prototypes/<slug>/`, non accanto al codice reale: percorso e nome devono dire che è un prototipo. Nel codice versionato non va nulla senza autorizzazione esplicita.

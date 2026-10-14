@@ -1,0 +1,1 @@
+Regola locale: non creare automaticamente un file in `docs/adr/`. Usa il formato ADR come traccia per contesto, decisione, alternative e conseguenze, poi registra la proposta nella fonte canonica indicata da `docs/agents/domain.md` soltanto nel task di recepimento autorizzato; durante Wayfinder la decisione va nella resolution del ticket.

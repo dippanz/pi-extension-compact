@@ -1,0 +1,1 @@
+Once a variant has won, capture the answer (which variant and why) the way the [SKILL](SKILL.md) describes. (regola locale) Non integrare la variante nel codice reale e non creare branch o commit: servono un ticket di implementazione e un'autorizzazione esplicita. Se avevi modifiche temporanee autorizzate nell'app:

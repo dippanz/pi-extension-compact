@@ -1,0 +1,1 @@
+2. **Trivial to run.** (regola locale) Un solo file o un solo comando: per la logica un file HTML da aprire con doppio clic; per la UI un comando lanciato da `.tmp/prototypes/<slug>/` (ad esempio `node` o un server statico). Non aggiungere script a `package.json` né route all'app senza autorizzazione esplicita.

@@ -1,0 +1,6 @@
+**Regola locale per ticket chiari senza duplicare i template upstream:**
+- Non sostituire i template di questa skill e non eliminare sezioni, contenuto o dettagli operativi. Conserva in particolare: obiettivo/domanda, scope e out of scope, implementazione o decisione attesa, criteri di accettazione/verifica, parent, blocchi, dipendenze e riferimenti.
+- Dopo ogni passaggio tecnico complesso aggiungi al massimo due frasi in linguaggio semplice, solo se aiutano davvero: **In pratica:** (che cosa cambia per utente o sistema) e, solo nei ticket di implementazione, **Come funzionerà:** (flusso concreto a grandi linee). Non usarla nei decision ticket Wayfinder: lì la decisione non va nel corpo ma nella resolution.
+- Inserisci queste frasi nella sezione upstream pertinente, non creare sezioni parallele. Corrispondenze: Question ↔ Obiettivo; What to build ↔ Implementazione attesa; Acceptance criteria ↔ Criteri di accettazione; Parent e Blocked by ↔ Dipendenze e riferimenti.
+- Mantieni netta la distinzione: i decision ticket fanno una domanda e si risolvono con una decisione confermata; i ticket di implementazione descrivono comportamento, lavoro e verifica, senza riaprire decisioni già prese.
+- Non modificare identificativi, riferimenti (`#numero`, URL), criteri verificabili, dipendenze e label.

@@ -1,0 +1,1 @@
+- **Sub-shape A**: rimuovi dalla pagina esistente le varianti e lo switcher; la variante vincente si porta nel codice reale solo con il ticket di implementazione.

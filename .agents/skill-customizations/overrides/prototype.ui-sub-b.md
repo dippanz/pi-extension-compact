@@ -1,0 +1,1 @@
+- **Sub-shape B**: rimuovi la route throwaway e lo switcher; promuovere la variante a route reale richiede il ticket di implementazione.

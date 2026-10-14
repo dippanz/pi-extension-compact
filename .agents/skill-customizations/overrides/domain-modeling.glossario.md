@@ -1,0 +1,1 @@
+Regola locale: qui "aggiornare `GLOSSARY.md`" significa aggiornare la fonte canonica pertinente indicata da `docs/agents/domain.md`, mantenendo il vocabolario coerente con la specifica. Durante Wayfinder non scrivere file: riporta termine e decisione nella resolution del ticket.

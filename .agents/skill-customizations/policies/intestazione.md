@@ -1,0 +1,1 @@
+**Regole locali del progetto** (prevalgono sulle istruzioni upstream di questa skill, compresi i file che la skill richiama). Testo generato da `.agents/skill-customizations/`: non modificare questa copia a mano; vedi `docs/agents/skill-customizations.md`.

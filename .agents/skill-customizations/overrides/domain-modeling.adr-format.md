@@ -1,0 +1,1 @@
+Regola locale: in questo repository non creare automaticamente `docs/adr/` né file ADR numerati. Usa questo formato solo come traccia di contesto, decisione, alternative e conseguenze per la fonte canonica indicata da `docs/agents/domain.md`; durante Wayfinder la decisione va nella resolution del ticket.

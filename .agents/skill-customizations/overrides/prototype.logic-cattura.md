@@ -1,0 +1,1 @@
+Once the prototype has answered its question, capture the answer the way the [SKILL](SKILL.md) describes. (regola locale) Il reducer, la macchina a stati o le funzioni validate restano nel prototipo in `.tmp/prototypes/<slug>/`: portarli nel modulo reale è lavoro di implementazione, con un ticket e un'autorizzazione esplicita. Nessun branch dedicato o commit senza autorizzazione.

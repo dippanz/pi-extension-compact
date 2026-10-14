@@ -1,0 +1,17 @@
+{
+  "name": "pi-extension-compact",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pi extension for hierarchical, selective, and recoverable context compaction.",
+  "type": "module",
+  "scripts": {
+    "skills:verify": "node .agents/skill-customizations/scripts/skills.mjs verify",
+    "skills:install": "node .agents/skill-customizations/scripts/skills.mjs install",
+    "skills:update": "node .agents/skill-customizations/scripts/skills.mjs update",
+    "skills:restore": "node .agents/skill-customizations/scripts/skills.mjs restore",
+    "skills:test": "node --test .agents/skill-customizations/tests/update-engine.test.mjs .agents/skill-customizations/tests/real-layer.test.mjs .agents/skill-customizations/tests/network.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

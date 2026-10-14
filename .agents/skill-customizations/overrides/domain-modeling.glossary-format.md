@@ -1,0 +1,1 @@
+- If neither exists (regola locale: è il caso di questo repository), non creare automaticamente `GLOSSARY.md`: le fonti canoniche sono in `docs/agents/domain.md`.

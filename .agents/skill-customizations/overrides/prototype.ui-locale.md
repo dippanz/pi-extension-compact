@@ -1,0 +1,1 @@
+Regola locale: le sub-shape A (varianti sulla route esistente) e B (route throwaway nell'app) modificano codice versionato. Usale solo con autorizzazione esplicita e su un perimetro concordato, e a fine prototipo rimuovi ogni modifica. Senza autorizzazione costruisci le varianti come pagina statica in `.tmp/prototypes/<slug>/`, con dati di esempio presi dall'app.

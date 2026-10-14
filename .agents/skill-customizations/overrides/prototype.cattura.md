@@ -1,0 +1,1 @@
+6. **Capture it when done.** (regola locale) Registra la risposta (il verdetto e la domanda che ha chiuso) nel ticket, con un puntatore al prototipo in `.tmp/prototypes/<slug>/` e, se utili, gli estratti che fissano la decisione. Non portare il prototipo nel codice reale e non committarlo: integrazione, commit o branch dedicati solo con autorizzazione esplicita.

@@ -1,0 +1,1 @@
+Regola locale: in questo repository non creare automaticamente `GLOSSARY.md`, `GLOSSARY-MAP.md`, `CONTEXT.md` o `docs/adr/`. Usa le fonti canoniche di `docs/agents/domain.md`; nuovi documenti di dominio richiedono una decisione esplicita.

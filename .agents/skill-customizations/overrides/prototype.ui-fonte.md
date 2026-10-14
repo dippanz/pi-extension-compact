@@ -1,0 +1,1 @@
+L'insieme completo delle varianti resta in `.tmp/prototypes/<slug>/` come fonte primaria locale. Poiché `.tmp/` non è condivisa, nel ticket riporta la risposta, il motivo e i dettagli delle varianti che servono a chi implementerà.

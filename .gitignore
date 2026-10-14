@@ -1,0 +1,61 @@
+# Dipendenze e output Node.js
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Skill degli agenti. Sono versionati skills-lock.json e .agents/skill-customizations/;
+# le copie generate si ricostruiscono con `npm run skills:install`.
+/.agents/skills/
+/.claude/skills
+
+# Artefatti temporanei degli agenti e runtime locale della pipeline
+.tmp/
+.pi-context-pipeline/
+
+# Configurazione locale e segreti
+.env
+.env.*
+!.env.example
+_locale/
+
+# Store locali dei package manager
+.pnpm-store/
+
+# Editor e strumenti
+.vscode/
+.idea/
+.obsidian/
+*.log
+*.old
+*.orig
+*.swp
+*~
+*.bkp
+
+# File temporanei Microsoft Office
+~$*
+*.tmp
+*.temp
+*.bak
+*.wbk
+*.asd
+*.xlk
+*.ldb
+*.laccdb
+*.idlk
+
+# File di sistema
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+**/Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Chiavi crittografiche private
+**/*-private.pem
+**/*.private.pem
+**/*.key
